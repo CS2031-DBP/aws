@@ -263,4 +263,4 @@ latest
 
 ## Conclusión 🎉
 
-Al final de este tutorial, habrás aprendido a desplegar una aplicación usando Docker y AWS EC2, una habilidad esencial en el mundo del desarrollo moderno y la computación en la nube. ¡Felicidades por alcanzar este hito!
+Hemos aprendido sobre Docker, una herramienta fundamental para facilitar y automatizar el despliegue de aplicaciones. Ahora que ya conoces como trabajar con el vamos aplicar el concepto de contenedores para automatizar nuestro despliegue de apps usando Github Actions y C
