@@ -1,5 +1,7 @@
 # Desplegando Nuestros Proyectos 🚀
 
+Para esta sección, queremos agradecer especialmente al profesor Geraldo Colchado por su apoyo y orientación en la creación de este material 👨‍🏫. Él está a cargo del siguiente curso, Cloud Computing CS2032 🌥️, donde profundizarán y resolverán todas sus dudas.
+
 Hemos utilizado Docker EC2 y DockerHub para desplegar nuestros proyectos. Sin embargo, ahora vamos a migrar a ECS y ECR para esta tarea. ECS (Elastic Container Service) y ECR (Elastic Container Registry) son servicios de AWS que nos permiten desplegar nuestros contenedores de manera más sencilla y escalable, eliminando las limitaciones horarias de AWS Academy.
 
 ## Paso 1: Añadir Dockerfile al Proyecto de Spring Boot con Java 21
@@ -26,13 +28,13 @@ A continuación, necesitamos construir el proyecto de Spring Boot para generar e
 mvn clean package
 ```
 
-Este comando compilará el proyecto y generará el archivo JAR en la carpeta `target`. Cuando commitiemos el proyecto, asegúrate de que el archivo JAR se haya generado correctamente y esté en la carpeta `target`. Target esta en el .gitignore, por lo que no se subira al repositorio. Para agregarlo al repositorio, usando git add -f target/ para forzar la subida del archivo. 
+Este comando compilará el proyecto y generará el archivo JAR en la carpeta `target`. Cuando commitiemos el proyecto, asegúrate de que el archivo JAR se haya generado correctamente y esté en la carpeta `target`. Target está en el `.gitignore`, por lo que no se subirá al repositorio. Para agregarlo al repositorio, usamos `git add -f target/` para forzar la subida del archivo:
 
 ```bash
 git add -f target/
 ```
 
-Para despues eliminarlo del repositorio, usamos el siguiente comando:
+Para eliminarlo después del repositorio, usamos el siguiente comando:
 
 ```bash
 git rm --cached target/
@@ -40,9 +42,9 @@ git rm --cached target/
 
 ## Paso 2: Abrir la Cloud Shell de AWS
 
-Para desplegar nuestra aplicación en ECS, necesitamos acceder a la consola de AWS. Podemos hacerlo a través de la Cloud Shell de AWS, que nos permite ejecutar comandos de AWS directamente en el navegador. 
+Para desplegar nuestra aplicación en ECS, necesitamos acceder a la consola de AWS. Podemos hacerlo a través de la Cloud Shell de AWS, que nos permite ejecutar comandos de AWS directamente en el navegador.
 
-Vamos a hacer dos malas práctica y ejecutar comandos directamente en la Cloud Shell. **No es recomendable hacer esto en un entorno de producción**. En un entorno de producción, se recomienda utilizar un sistema de control de versiones y automatización de despliegues para garantizar la consistencia y la trazabilidad de los cambios.  La otra poner nuestro repo en publico, lo cual no es recomendable. 
+Vamos a hacer dos malas prácticas y ejecutar comandos directamente en la Cloud Shell. **No es recomendable hacer esto en un entorno de producción**. En un entorno de producción, se recomienda utilizar un sistema de control de versiones y automatización de despliegues para garantizar la consistencia y la trazabilidad de los cambios. La otra es poner nuestro repositorio en público, lo cual no es recomendable.
 
 Clonamos nuestro repositorio en la Cloud Shell de AWS:
 
@@ -56,24 +58,37 @@ Ingresamos a la carpeta del proyecto:
 cd <nombre-proyecto>
 ```
 
+## Paso 3: Crear un Repositorio en ECR 🗂️
 
-## Paso 3: Crear un Repositorio en ECR
+Amazon ECR (Elastic Container Registry) es el servicio equivalente de AWS a Docker Hub, permitiéndonos almacenar, administrar y desplegar nuestras imágenes de contenedores de manera eficiente.
 
-Ingresamos a la consola de AWS y buscamos el servicio ECR. Creamos un repositorio con el nombre que deseemos.
+Vamos a crear un repositorio en ECR en unos simples pasos. ¡Sigue conmigo!
 
-1. **Abrir la Consola de AWS**: Navega a la consola de AWS.
-2. **Buscar ECR**: Usa la barra de búsqueda para encontrar el servicio ECR.
-3. **Crear Repositorio**: Sigue las instrucciones para crear un nuevo repositorio y dale el nombre que prefieras.
+1. **Abrir la Consola de AWS**: Navega a la consola de AWS. 🖥️
+2. **Buscar ECR**: Usa la barra de búsqueda en la parte superior para encontrar el servicio ECR. 🔍
+3. **Crear Repositorio**: Una vez en la página de ECR, sigue las instrucciones para crear un nuevo repositorio y dale el nombre que prefieras. 📛
 
-## Paso 4: Construir y Subir la Imagen al Repositorio de ECR
+![ECR AWS CREATION](../media/05/3.gif)
 
-1. Autenticar Docker con ECR. Copiamos el URI del repositorio de ECR que acabamos de crear.
+Estos pasos te permitirán tener un repositorio listo para recibir tus imágenes de Docker. ¡Adelante, estás haciendo un gran trabajo! 🚀
+
+## Paso 4: Construir y Subir la Imagen al Repositorio de ECR 🚢
+
+¡Es hora de poner en marcha nuestra aplicación! Vamos a construir la imagen de Docker y subirla a nuestro repositorio en ECR.
+
+
+
+1. **Autenticar Docker con ECR**: Primero, necesitamos autenticar Docker con nuestro repositorio de ECR. Copiamos el URI del repositorio de ECR que acabamos de crear y ejecutamos el siguiente comando:
 
 ```bash
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account_id>.dkr.ecr.us-east-1.amazonaws.com
 ```
 
-Nos aparecerá un mensaje de éxito si la autenticación fue exitosa. Con un mensaje como el siguiente:
+Para extraer nuestro `account_id`, dirígete a la esquina superior derecha al costado de la región y haz clic. Esto abrirá una interfaz donde podemos copiar el ID de la cuenta:
+
+![Cuenta ID](../media/05/4.gif)
+
+Si la autenticación es exitosa, veremos un mensaje de éxito similar a este:
 
 ```bash
 WARNING! Your password will be stored unencrypted in /home/cloudshell-user/.docker/config.json.
@@ -83,57 +98,98 @@ https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 Login Succeeded
 ```
 
-A continuación, construimos la imagen de Docker y la subimos al repositorio de ECR:
+2. **Construir la Imagen de Docker**: Ahora, construimos la imagen de Docker para nuestra aplicación de Spring Boot. En la terminal, ejecuta:
 
 ```bash
 docker build -t spring-boot-app .
 ```
 
-Para extraer nuestro account_id, nos dirigimos a la esquina superior derecha al cosado de la región y le damos click nos abrira un una interfaz donde copiamos el ID de la cuenta.
+3. **Etiquetar la Imagen**: Necesitamos etiquetar nuestra imagen de Docker con el URI de nuestro repositorio de ECR. 
 
 ```bash
 docker tag spring-boot-app:latest <account_id>.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest
 ```
 
+4. **Subir la Imagen a ECR**: Finalmente, subimos la imagen etiquetada a nuestro repositorio de ECR:
+
 ```bash
 docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/spring-boot-app:latest
 ```
 
-Ahora, nuestra imagen de Docker se ha subido al repositorio de ECR. Podemos verificarlo en la consola de AWS. Igualmente, podemos ver la imagen en la consola de ECR. Sino ir a el ECR y ver la imagen que acabamos de subir.
+¡Y listo! Nuestra imagen de Docker se ha subido al repositorio de ECR. Podemos verificarlo en la consola de AWS o directamente en la consola de ECR. 🎉
 
-## Paso 5: Crear grupos de seguridad para ECS y RDS
+Sigue estos pasos y tendrás tu aplicación lista para ser desplegada en ECS. ¡Buen trabajo! 🚀
 
-Para permitir que ECS se comunique con RDS, necesitamos crear un grupo de seguridad para cada uno.
+## Paso 5: Crear Grupos de Seguridad para ECS y RDS 🔒
 
-Otro Grupo de Seguridad para ECS (sg-ecs) puerto 8080 para Spring Boot fuente todos y el egreso a todos.
-Crear Grupo de Seguridad para RDS (sg-rds) puerto 5432 para Postgres con fuente sg-ecs entrada y sin salida porque es un rds y no necesita salida.
+Para permitir que ECS se comunique con RDS, necesitamos crear un grupo de seguridad para cada uno. Sigamos estos pasos:
 
-## Paso 6: Crear la base de datos en RDS
+1. **Crear Grupo de Seguridad para ECS (sg-ecs)**:
+   - **Nombre del Grupo**: sg-ecs
+   - **Puertos**: Abrir el puerto 8080 para Spring Boot
+   - **Fuente**: Todos los orígenes (0.0.0.0/0)
+   - **Egreso**: Permitir todo el tráfico (0.0.0.0/0)
 
-Ingresamos a la consola de AWS y buscamos el servicio RDS. Creamos una nueva instancia de base de datos con el motor PostgreSQL.
+   Esto permitirá que nuestra aplicación Spring Boot reciba tráfico en el puerto 8080.
 
-Copiamos las credenciales de la base de datos y las guardamos en un lugar seguro. Necesitaremos estas credenciales para configurar nuestra aplicación de Spring Boot.
+2. **Crear Grupo de Seguridad para RDS (sg-rds)**:
+   - **Nombre del Grupo**: sg-rds
+   - **Puertos**: Abrir el puerto 5432 para Postgres
+   - **Fuente**: Limitar la entrada únicamente desde el grupo de seguridad sg-ecs
+   - **Salida**: Sin reglas de salida (ya que RDS no necesita enviar tráfico saliente)
 
-la ponemos en publica para conectarnos y crear la base de datos. llamaos springbootdb.
+   Esto asegurará que nuestra base de datos Postgres solo acepte conexiones desde nuestra aplicación ECS.
 
-```bash
-psql -h <rds-endpoint> -p 5432 -U <your-username> -W
-```
+¡Ahora nuestros servicios podrán comunicarse de forma segura y eficiente! 🛡️🚀
 
-```sql
-CREATE DATABASE springbootdb;
-```
+## Paso 6: Crear la Base de Datos en RDS 📊
 
+Para almacenar nuestros datos, vamos a crear una base de datos en Amazon RDS usando el motor PostgreSQL. Sigamos estos pasos para asegurarnos de tener todo correctamente configurado:
 
-## Paso 7: Crear un Cluster de ECS
+1. **Buscar el Servicio RDS**:
+   - En la barra de búsqueda, escribimos "RDS" y seleccionamos el servicio Amazon RDS. 🔍
 
-1. **Buscar ECS**: Usamos la barra de búsqueda para encontrar el servicio ECS.
-2. **Crear Cluster**: Creamos un nuevo cluster de ECS y seleccionamos el tipo de cluster que prefiramos.
-3. **Configurar Cluster**: Configuramos el cluster con la información necesaria y creamos el cluster.
-    - Cluster Name: Nombre del cluster. 
-    - EC2 Instance Type: Tipo de instancia de EC2 que se utilizará para el cluster.
-    - Key Pair: Par de claves para acceder a las instancias de EC2.
-    - Fargate 
+2. **Crear una Nueva Instancia de Base de Datos**:
+   - Hacemos clic en "Crear base de datos" y seleccionamos el motor **PostgreSQL**. 🛢️
+3. **Configuración Manual**:
+   - Seleccionamos la opción de configuración **manual** para tener control total sobre la configuración. ⚙️
+   - Establecemos una **contraseña** segura para el usuario administrador (master user). 🔒
+
+4. **Configurar Parámetros Básicos**:
+   - Elegimos una clase de instancia y configuramos las opciones de almacenamiento según nuestras necesidades. 📦
+   - Por defecto, se creará una URL de la base de datos y una base de datos llamada `postgres`.
+
+5. **Configurar la Conectividad**:
+   - Seleccionamos el grupo de seguridad que creamos anteriormente para RDS (`sg-rds`), asegurándonos de que permita conexiones solo desde el grupo de seguridad de ECS (`sg-ecs`). 🔗
+
+6. **Crear y Guardar las Credenciales**:
+   - Al finalizar la configuración, copiamos las credenciales de la base de datos (nombre de usuario, contraseña, URL) y las guardamos en un lugar seguro. 🔐
+   - Estas credenciales serán necesarias para configurar nuestra aplicación Spring Boot para conectarse a la base de datos.
+
+¡Y eso es todo! Ahora tenemos una base de datos PostgreSQL en Amazon RDS lista para ser utilizada por nuestra aplicación. 🎉
+
+## Paso 7: Crear un Cluster de ECS 🛠️
+
+Para desplegar nuestra aplicación en contenedores, necesitamos crear un cluster en Amazon ECS. Aquí están los pasos detallados:
+
+1. **Buscar ECS**:
+   - Usamos la barra de búsqueda de AWS para encontrar el servicio **ECS**. 🔍
+
+2. **Crear Cluster**:
+   - Hacemos clic en "Crear cluster" y seleccionamos el tipo de cluster que prefiramos (EC2 o Fargate). 🖥️
+   - Para una gestión más sencilla y sin necesidad de administrar servidores, seleccionamos **Fargate**. 🚀
+
+3. **Configurar Cluster**:
+   - Configuramos el cluster con la información necesaria. Aquí algunos parámetros importantes a configurar:
+     - **Cluster Name**: Especificamos el nombre del cluster.
+     - **EC2 Instance Type**: (Si seleccionamos EC2) Elegimos el tipo de instancia de EC2 que se utilizará para el cluster. 💻
+     - **Key Pair**: (Si seleccionamos EC2) Seleccionamos el par de claves para acceder a las instancias de EC2. 🔑
+     - **Fargate**: Si seleccionamos Fargate, no necesitamos especificar tipo de instancia ni par de claves, ya que Fargate gestiona estos recursos automáticamente. 🎛️
+
+4. **Finalizar y Crear**:
+   - Revisamos las configuraciones y hacemos clic en "Crear" para finalizar el proceso. 📝
+
+¡Listo! Ahora tienes un cluster de ECS configurado y listo para desplegar tus contenedores. Excelente trabajo. ¡Estamos cada vez más cerca del despliegue final! 🚢💪
 
 ## Paso 8: Definir una tarea de ECS
 
@@ -141,7 +197,7 @@ LabRole para rol de tarea y rol de ejecución.
 
 tamaño de la tarea 2 vcpu y 4 gb de ram.
 
-copaimos las credenciales de la base de datos en el contenedor.
+cargamos la variables de entorno copaimos las credenciales de la base de datos en el contenedor. 
 
 ## Paso 9: Crear un Servicio de ECS
 

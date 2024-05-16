@@ -2,10 +2,6 @@
 
 ¡Bienvenidos a la semana 8 de tu curso favorito, Desarrollo Basado en Plataformas CS2031 🎓! Esta semana, daremos un paso importante: aprenderemos a usar la "nube" para hacer que nuestras aplicaciones sean accesibles desde cualquier parte del mundo 🌍.
 
-Quiero agradecer especialmente al profesor Geraldo Colchado, por su apoyo y orientación en la creación de este material 👨‍🏫. Él está a cargo del siguiente curso, Cloud Computing CS2032 🌥️, donde profundizarán y resolverán todas sus dudas.
-
-Este material ha sido desarrollado por mí, Gabriel Romero, asistente de enseñanza de CS2031. ¡Espero que encuentren útiles los recursos y las explicaciones proporcionadas aquí! 🚀
-
 ## Objetivos 🎯
 
 Desplegar un proyecto backend en la nube usando Amazon Web Services (AWS) 🚀. Empleando contenedores Docker, en los servicios ECR (Elastic Container Registry) y ECS (Elastic Container Service) de AWS. Usando Github Actions para CI/CD.
