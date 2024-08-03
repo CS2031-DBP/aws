@@ -1,16 +1,26 @@
 # AWS - DBP CS2031 🌐
 
-¡Bienvenidos a la semana 8 de tu curso favorito, Desarrollo Basado en Plataformas CS2031 🎓! Esta semana, daremos un paso importante: aprenderemos a usar la "nube" para hacer que nuestras aplicaciones sean accesibles desde cualquier parte del mundo 🌍.
+¡Bienvenidos a tu curso favorito, Desarrollo Basado en Plataformas CS2031 🎓! En esta sección, aprenderemos a utilizar la "nube" para hacer que nuestras aplicaciones sean accesibles desde cualquier parte del mundo 🌍.
 
 ## Objetivos 🎯
 
-Desplegar un proyecto backend en la nube usando Amazon Web Services (AWS) 🚀. Empleando contenedores Docker, en los servicios ECR (Elastic Container Registry) y ECS (Elastic Container Service) de AWS. Usando Github Actions para CI/CD.
+Desplegar un proyecto backend en la nube usando Amazon Web Services (AWS) 🚀. Empleando contenedores Docker, en los servicios ECR (Elastic Container Registry) y ECS (Elastic Container Service) de AWS, además de usar Github Actions para CI/CD. También exploraremos otros servicios clave de AWS, como S3 y Amplify, para crear aplicaciones escalables y seguras.
+
+## Índice 📋
+
+Hemos creado una guía paso a paso para que puedas seguir el demo de despliegue en AWS. ¡Sigue los pasos y despliega tu aplicación en la nube! 🌐
+
+1. [Introducción a Cloud](./docs/01-intro-cloud.md)
+2. [AWS Academy](./docs/02-aws-academy.md)
+3. [Docker](./docs/03-docker-ec2.md)
+4. [Actions Docker](./docs/04-actions-docker-ec2.md)
+5. [ECR ECS](./docs/05-ecs-ecr-rds.md)
+6. [Amplify](./docs/06-amplify.md)
+7. [S3](./docs/07-s3.md)
 
 ## Masterclass Auditorio 🎤
 
 Nuestro asistente de cátedra (T.A) Gabriel Romero, brindó una masterclass en el auditorio de CS2031 en UTEC, donde dio una introducción a la nube y AWS. Si te la perdiste, no te preocupes, aquí te dejamos un resumen de lo que aprendimos en la masterclass 📚.
-
-Enlace de la masterclass: [Intro AWS]()
 
 ## ¿Qué es la nube? ☁️
 
@@ -53,15 +63,3 @@ AWS Academy es un programa global de Amazon que colabora con universidades para 
 ### ¡No pierdas esta oportunidad! 🌟
 
 Ser parte de AWS Academy es una gran ventaja en tu educación y carrera. Asegúrate de aprovechar al máximo todos los recursos y oportunidades que esto te brinda. ¡Es tu momento de brillar en el mundo de la computación en la nube!
-
-## ¡Manos a la obra! 🛠️
-
-¡Es hora de desplegar nuestra aplicación en la nube! Sigue los pasos que te mostraremos en el demo para subir tu proyecto a AWS. ¡Vamos a ello! 🚀
-
-### Indice 📋
-
-Hemos creado una guía paso a paso para que puedas seguir el demo de despliegue en AWS. ¡Sigue los pasos y despliega tu aplicación en la nube! 🌐
-
-1. [Introducción a Cloud](./docs/01-intro-cloud.md)
-2. [AWS Academy](./docs/02-aws-academy.md)
-3. [Docker](./docs/03-docker-ec2.md)
