@@ -43,26 +43,38 @@ target
 └── hackathon-0.0.1-SNAPSHOT.jar.original
 ```
 
-## Paso 2: Abrir la Cloud Shell de AWS
+### Paso 2: Abrir la Cloud Shell de AWS
 
 Para desplegar nuestra aplicación en ECS, necesitamos acceder a la consola de AWS. Podemos hacerlo a través de la Cloud Shell de AWS, que nos permite ejecutar comandos de AWS directamente en el navegador.
 
-Realizaremos dos acciones que no son las mejores prácticas, pero que nos ayudarán a entender el sistema. Primero, ejecutaremos comandos directamente en la Cloud Shell. 
-
-Segundo, pondremos nuestro repositorio en modo público, lo cual no se recomienda por la exposición del código. Sin embargo, esto es solo para la configuración inicial. 
-
 ![AWS Cloud Shell](../media/05/1.gif)
 
-Clonamos nuestro repositorio en la Cloud Shell de AWS:
+Vamos a crear una carpeta llamada `app` en la Cloud Shell y subir nuestro archivo `hackathon-0.0.1-SNAPSHOT.jar` junto con el `Dockerfile` a esta carpeta.
+
+Para subir los archivos, le damos click a "Acciones" y seleccionamos "Subir archivo" y seleccionamos los archivos `hackathon-0.0.1-SNAPSHOT.jar` y `Dockerfile`.
+
+Creamos la carpeta `app` y movemos los archivos a esta carpeta:
 
 ```bash
-git clone <url-repo>
+mkdir app
+mv hackathon-0.0.1-SNAPSHOT.jar app
+mv Dockerfile app
 ```
 
-Ingresamos a la carpeta del proyecto:
+Ahora desde app crearemos `target` y moveremos el archivo `hackathon-0.0.1-SNAPSHOT.jar` a esta carpeta:
 
 ```bash
-cd <nombre-proyecto>
+mkdir target
+mv hackathon-0.0.1-SNAPSHOT.jar target
+```
+
+La estructura de archivos debería verse así:
+
+```
+app
+├── Dockerfile
+├── target
+│   └── hackathon-0.0.1-SNAPSHOT.jar
 ```
 
 ## Paso 3: Crear un Repositorio en ECR 🗂️
