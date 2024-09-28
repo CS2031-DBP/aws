@@ -28,16 +28,19 @@ A continuación, necesitamos construir el proyecto de Spring Boot para generar e
 mvn clean package
 ```
 
-Este comando compilará el proyecto y generará el archivo JAR en la carpeta `target`. Cuando commitiemos el proyecto, asegúrate de que el archivo JAR se haya generado correctamente y esté en la carpeta `target`. Target está en el `.gitignore`, por lo que no se subirá al repositorio. Para agregarlo al repositorio, usamos `git add -f target/` para forzar la subida del archivo:
+Este comando compilará el proyecto y generará el archivo JAR en la carpeta `target`. Cuando commitiemos el proyecto, asegúrate de que el archivo JAR se haya generado correctamente y esté en la carpeta `target`. 
 
-```bash
-git add -f target/
 ```
-
-Para eliminarlo después del repositorio, usamos el siguiente comando:
-
-```bash
-git rm --cached target/
+target
+├── classes
+├── generated-sources
+├── generated-test-sources
+├── maven-archiver
+├── maven-status
+├── surefire-reports
+├── test-classes
+├── hackathon-0.0.1-SNAPSHOT.jar
+└── hackathon-0.0.1-SNAPSHOT.jar.original
 ```
 
 ## Paso 2: Abrir la Cloud Shell de AWS
