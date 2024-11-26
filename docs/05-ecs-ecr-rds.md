@@ -43,6 +43,22 @@ target
 └── hackathon-0.0.1-SNAPSHOT.jar.original
 ```
 
+Para configurar las variables de entorno en tu aplicación de manera efectiva, asegúrate de utilizar el siguiente formato en el archivo de propiedades (`application.properties` o `application.yml`) de Spring Boot:
+
+```properties
+spring.datasource.url=jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+spring.datasource.username=${DB_USERNAME}
+spring.datasource.password=${DB_PASSWORD}
+```
+
+**Detalles:**
+
+- `${DB_HOST}`: Dirección del host donde está alojada la base de datos.
+- `${DB_PORT}`: Puerto en el que la base de datos está escuchando (generalmente `5432` para PostgreSQL).
+- `${DB_NAME}`: Nombre de la base de datos.
+- `${DB_USERNAME}`: Usuario con acceso a la base de datos.
+- `${DB_PASSWORD}`: Contraseña del usuario.
+
 ### Paso 2: Abrir la Cloud Shell de AWS
 
 Para desplegar nuestra aplicación en ECS, necesitamos acceder a la consola de AWS. Podemos hacerlo a través de la Cloud Shell de AWS, que nos permite ejecutar comandos de AWS directamente en el navegador.
